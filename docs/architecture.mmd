@@ -1,0 +1,28 @@
+flowchart TB
+  subgraph Client["Client (Browser)"]
+    UI["Vue 3 + Vue Router\nUI + CSS"]
+    SocketClient["Socket.IO Client"]
+  end
+
+  subgraph Backend["Backend (Node.js + Express)"]
+    API["REST API"]
+    Auth["JWT Auth + Roles"]
+    Realtime["Socket.IO Server"]
+  end
+
+  subgraph Data["Data (PostgreSQL)"]
+    Users["users"]
+    Polls["polls"]
+    Votes["votes"]
+    Comments["comments"]
+  end
+
+  UI -->|"Fetch REST"| API
+  API --> Auth
+  API --> Data
+  Realtime --> SocketClient
+  API --> Realtime
+
+  Users --> Polls
+  Polls --> Votes
+  Polls --> Comments
