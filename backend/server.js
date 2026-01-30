@@ -18,23 +18,26 @@ const allowedOrigins = (process.env.CLIENT_ORIGIN || "*")
   .map((origin) => origin.trim())
   .filter(Boolean);
 
-const corsOptions = {
-  origin(origin, callback) {
-    if (!origin) {
-      // Allow non-browser clients and file:// origins.
-      return callback(null, true);
-    }
-    if (allowedOrigins.includes("*") || allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
-    return callback(new Error("Not allowed by CORS"));
-  }
-};
+  const corsOptions = {
+    origin(origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes("*") || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"));
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "x-user-id"],
+    credentials: true,
+    optionsSuccessStatus: 204
+  };
+  
 
 const io = new Server(server, { cors: corsOptions });
 
 app.set("io", io);
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 app.use(express.json());
 
 app.get("/health", (req, res) => {
