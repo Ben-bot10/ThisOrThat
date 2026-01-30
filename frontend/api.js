@@ -1,4 +1,6 @@
-const API_BASE = window.API_BASE || "https://this-or-thatgg.vercel.app/";
+const API_BASE =
+  "https://this-or-that-h79wlk7pf-bens-projects-6408f5db.vercel.app";
+
 
 async function request(path, options = {}) {
   const token = localStorage.getItem("token");
