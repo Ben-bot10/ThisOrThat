@@ -170,7 +170,7 @@ const LoginPage = {
         </div>
         <div v-if="!isSignup">
           <form @submit.prevent="login">
-            <input v-model="loginForm.email" type="email" placeholder="Email" required />
+            <input v-model="loginForm.email" type="email" placeholder="Email" required autocomplete="email" />
             <input v-model="loginForm.password" type="password" placeholder="Password" required />
             <button class="btn" :disabled="authLoading">
               <span class="spinner" v-if="authLoading"></span>
@@ -181,7 +181,7 @@ const LoginPage = {
         </div>
         <div v-else>
           <form @submit.prevent="signup">
-            <input v-model="signupForm.email" type="email" placeholder="Email" required />
+            <input v-model="signupForm.email" type="email" placeholder="Email" required autocomplete="email" />
             <input v-model="signupForm.password" type="password" placeholder="Password" required />
             <button class="btn secondary" :disabled="authLoading">
               <span class="spinner" v-if="authLoading"></span>
