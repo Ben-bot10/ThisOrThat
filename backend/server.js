@@ -53,7 +53,5 @@ io.on("connection", (socket) => {
   socket.emit("connected", { message: "Realtime polling connected." });
 });
 
-const port = process.env.PORT || 3000;
-server.listen(port, () => {
-  console.log(`API listening on http://localhost:${port}`);
-});
+export default server;
+
