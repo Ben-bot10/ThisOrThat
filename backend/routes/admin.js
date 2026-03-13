@@ -72,7 +72,7 @@ router.post("/users/:userId/ban", async (req, res) => {
 router.get("/users", async (req, res) => {
   const result = await query(
     `
-    SELECT id, email, role, banned, created_at
+    SELECT id, email, username, name, role, banned, created_at
     FROM users
     ORDER BY created_at DESC
     `

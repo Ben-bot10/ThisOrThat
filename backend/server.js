@@ -7,6 +7,7 @@ import authRoutes from "./routes/auth.js";
 import pollRoutes from "./routes/polls.js";
 import adminRoutes from "./routes/admin.js";
 import userRoutes from "./routes/users.js";
+import quizRoutes from "./routes/quizzes.js";
 
 dotenv.config();
 
@@ -37,10 +38,10 @@ const io = new Server(server, { cors: corsOptions });
 
 app.set("io", io);
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions)); //
+app.options("*", cors(corsOptions));
 app.use(express.json());
 
-app.get("/health", (req, res) => //lol
+app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
@@ -48,9 +49,15 @@ app.use("/api/auth", authRoutes);
 app.use("/api/polls", pollRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/quizzes", quizRoutes);
 
 io.on("connection", (socket) => {
   socket.emit("connected", { message: "Realtime polling connected." });
+});
+
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
 
 export default server;

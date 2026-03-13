@@ -1,5 +1,4 @@
-const API_BASE =
-  "https://this-or-that-h79wlk7pf-bens-projects-6408f5db.vercel.app";
+const API_BASE = window.API_BASE || "http://localhost:3000";
 
 
 async function request(path, options = {}) {
@@ -54,5 +53,11 @@ export const api = {
   banUser: (id, banned) =>
     request(`/api/admin/users/${id}/ban`, { method: "POST", body: JSON.stringify({ banned }) }),
   getAnalytics: () => request("/api/admin/analytics"),
-  getUsers: () => request("/api/admin/users")
+  getUsers: () => request("/api/admin/users"),
+  getQuizzes: () => request("/api/quizzes"),
+  getQuiz: (id) => request(`/api/quizzes/${id}`),
+  createQuiz: (payload) => request("/api/quizzes", { method: "POST", body: JSON.stringify(payload) }),
+  submitQuiz: (id, payload) =>
+    request(`/api/quizzes/${id}/submit`, { method: "POST", body: JSON.stringify(payload) }),
+  getQuizHistory: () => request("/api/users/me/quiz-history")
 };
