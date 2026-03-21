@@ -8,6 +8,7 @@ import pollRoutes from "./routes/polls.js";
 import adminRoutes from "./routes/admin.js";
 import userRoutes from "./routes/users.js";
 import quizRoutes from "./routes/quizzes.js";
+import leaderboardRoutes from "./routes/leaderboard.js";
 
 dotenv.config();
 
@@ -50,6 +51,7 @@ app.use("/api/polls", pollRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/quizzes", quizRoutes);
+app.use("/api/leaderboard", leaderboardRoutes);
 
 io.on("connection", (socket) => {
   socket.emit("connected", { message: "Realtime polling connected." });

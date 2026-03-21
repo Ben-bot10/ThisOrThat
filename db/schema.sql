@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS polls (
   id BIGSERIAL PRIMARY KEY,
   question TEXT NOT NULL,
   type TEXT NOT NULL CHECK (type IN ('text-text', 'image-image', 'text-image')),
+  category TEXT NOT NULL DEFAULT 'General',
   option_a_text TEXT,
   option_b_text TEXT,
   option_a_image_url TEXT,

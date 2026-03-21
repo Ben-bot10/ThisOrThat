@@ -59,5 +59,6 @@ export const api = {
   createQuiz: (payload) => request("/api/quizzes", { method: "POST", body: JSON.stringify(payload) }),
   submitQuiz: (id, payload) =>
     request(`/api/quizzes/${id}/submit`, { method: "POST", body: JSON.stringify(payload) }),
-  getQuizHistory: () => request("/api/users/me/quiz-history")
+  getQuizHistory: () => request("/api/users/me/quiz-history"),
+  getLeaderboard: () => request("/api/leaderboard")
 };

@@ -45,6 +45,7 @@ function mapPollRow(row) {
     id: row.id,
     question: row.question,
     type: row.type,
+    category: row.category || "General",
     optionA: {
       text: row.option_a_text,
       imageUrl: row.option_a_image_url
@@ -128,6 +129,7 @@ router.post("/", requireAuth, async (req, res) => {
   const {
     question,
     type,
+    category,
     optionAText,
     optionBText,
     optionAImageUrl,
@@ -154,13 +156,14 @@ router.post("/", requireAuth, async (req, res) => {
   const result = await query(
     `
     INSERT INTO polls
-      (question, type, option_a_text, option_b_text, option_a_image_url, option_b_image_url, status, created_by, ends_at)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      (question, type, category, option_a_text, option_b_text, option_a_image_url, option_b_image_url, status, created_by, ends_at)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
     RETURNING id
     `,
     [
       question,
       type,
+      category || "General",
       optionAText || null,
       optionBText || null,
       normalizedA,
@@ -188,7 +191,7 @@ router.post("/:pollId/vote", requireAuth, async (req, res) => {
         `
         INSERT INTO votes (user_id, poll_id, option)
         VALUES ($1, $2, $3)
-        ON CONFLICT (user_id, poll_id) DO NOTHING
+        ON CONFLICT (user_id, poll_id) DO UPDATE SET option = $3
         `,
         [req.user.id, pollId, option]
       );
